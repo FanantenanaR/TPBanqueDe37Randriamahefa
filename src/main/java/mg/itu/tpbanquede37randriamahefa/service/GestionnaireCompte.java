@@ -5,6 +5,7 @@
 package mg.itu.tpbanquede37randriamahefa.service;
 
 import jakarta.annotation.sql.DataSourceDefinition;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
@@ -38,7 +39,7 @@ import mg.itu.tpbanquede37randriamahefa.entity.CompteBancaire;
             "driverClass=com.mysql.cj.jdbc.Driver"
         }
 )
-@Dependent
+@ApplicationScoped
 public class GestionnaireCompte {
 
     @PersistenceContext(unitName = "banquePU")
@@ -58,6 +59,24 @@ public class GestionnaireCompte {
     public List<CompteBancaire> getAllComptes() {
         TypedQuery<CompteBancaire> query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
         return query.getResultList();
+    }
+    
+    public CompteBancaire getById(Long id) {
+        return em.find(CompteBancaire.class, id);  
+    }
+
+    @Transactional
+    public void transferer(CompteBancaire source, CompteBancaire destination,
+            int montant) {
+        source.retirer(montant);
+        destination.deposer(montant);
+        update(source);
+        update(destination);
+    }
+
+    @Transactional
+    public CompteBancaire update(CompteBancaire compteBancaire) {
+        return em.merge(compteBancaire);
     }
 
     public long nbComptes() {
