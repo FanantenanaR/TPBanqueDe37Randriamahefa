@@ -9,6 +9,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
 import mg.itu.tpbanquede37randriamahefa.entity.CompteBancaire;
+import mg.itu.tpbanquede37randriamahefa.jsf.util.Util;
 import mg.itu.tpbanquede37randriamahefa.service.GestionnaireCompte;
 
 /**
@@ -23,6 +24,7 @@ public class ModifierCompte implements Serializable {
     GestionnaireCompte gestionCompte;
     
     private Long idCompte;
+    private String nouveauNom;
     private CompteBancaire compte;
 
     /**
@@ -46,13 +48,25 @@ public class ModifierCompte implements Serializable {
     public void setCompte(CompteBancaire compte) {
         this.compte = compte;
     }
+
+    public String getNouveauNom() {
+        return nouveauNom;
+    }
+
+    public void setNouveauNom(String nouveauNom) {
+        this.nouveauNom = nouveauNom;
+    }
     
     public void loadCompte() {
         this.compte = gestionCompte.getById(idCompte);
+        this.nouveauNom = compte.getNom();
     }
     
     public String appliquerChangement() {
+        String ancienNom = compte.getNom();
+        compte.setNom(nouveauNom);
         gestionCompte.update(compte);
+        Util.addFlashInfoMessage("Changement de nom de \"" + ancienNom+ "\" en \""+compte.getNom()+"\" terminé avec succès.");
         return "listeComptes?faces-redirect=true";
     }
 }
