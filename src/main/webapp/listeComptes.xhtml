@@ -19,15 +19,25 @@
                     <div class="card">
                         <p:dataTable var="compte" value="#{listeComptes.allComptes}">
                             <p:column headerText="Id">
-                                <h:outputText value="#{compte.id}" />
+                                <h:link outcome="mouvementCompte?id=#{compte.id}" value="#{compte.id}"/>
                             </p:column>
-                            
+
                             <p:column headerText="Nom">
                                 <h:outputText value="#{compte.nom}" />
                             </p:column>
 
                             <p:column headerText="Solde">
                                 <h:outputText value="#{compte.solde}" />
+                            </p:column>
+
+                            <p:column>
+                                <p:graphicImage name="images/delete.png" library="Delete"/>
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:link outcome="supprimerCompte?id=#{compte.id}">
+                                    <p:graphicImage name="images/delete.png" height="30px" />
+                                </h:link>
                             </p:column>
                         </p:dataTable>
                     </div>

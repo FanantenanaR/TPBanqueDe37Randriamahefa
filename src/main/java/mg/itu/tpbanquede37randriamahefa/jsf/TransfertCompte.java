@@ -4,11 +4,13 @@
  */
 package mg.itu.tpbanquede37randriamahefa.jsf;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
 import mg.itu.tpbanquede37randriamahefa.entity.CompteBancaire;
+import mg.itu.tpbanquede37randriamahefa.jsf.util.Util;
 import mg.itu.tpbanquede37randriamahefa.service.GestionnaireCompte;
 
 /**
@@ -16,11 +18,12 @@ import mg.itu.tpbanquede37randriamahefa.service.GestionnaireCompte;
  * @author USER
  */
 @Named(value = "transfertCompte")
-@ViewScoped
+@RequestScoped
 public class TransfertCompte implements Serializable {
+
     @Inject
     GestionnaireCompte gestionCompte;
-    
+
     private Long idEnvoyeur;
     private Long idDestinataire;
     private int montant;
@@ -54,16 +57,33 @@ public class TransfertCompte implements Serializable {
     public void setMontant(int montant) {
         this.montant = montant;
     }
-    
-    public String effectuerTransfert(){
+
+    public String effectuerTransfert() {
+
+        if (idEnvoyeur == null || idEnvoyeur == 0) {
+            System.out.println("Champs non remplis");
+            Util.messageErreur("Champs non remplis", "Aucun envoyeur n'a été saisi.");
+            return null;
+        }
+        if (idDestinataire == null || idDestinataire == 0) {
+            System.out.println("Champs non remplis");
+            Util.messageErreur("Champs non remplis", "Aucun destinataire n'a été saisi.");
+            return null;
+        }
         CompteBancaire envoyeur = gestionCompte.getById(idEnvoyeur);
+        if (envoyeur == null) {
+            System.out.println("Client introuvable");
+            Util.messageErreur("Client introuvable", "Aucun envoyeur correspond à l'ID saisi.");
+            return null;
+        }
         CompteBancaire destinataire = gestionCompte.getById(idDestinataire);
+        if (destinataire == null) {
+            System.out.println("Client introuvable");
+            Util.messageErreur("Client introuvable", "Aucun destinataire correspond à l'ID saisi.");
+            return null;
+        }
         gestionCompte.transferer(envoyeur, destinataire, montant);
         return "listeComptes";
     }
-    
-    
-    
-    
-    
+
 }

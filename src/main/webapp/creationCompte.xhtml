@@ -10,60 +10,42 @@
         <ui:composition template="./WEB-INF/template/template_default.xhtml">
 
             <ui:define name="top">
-                Transferer de l'argent d'un compte à une autre
+                Création de compte bancaire 
             </ui:define>
 
             <ui:define name="content">
-                <p:tooltip/>
                 <h:form>
-                    <h5>Envoyeur</h5>
+                    <h5>Nom du proprietaire</h5>
                     <div class="grid ui-fluid">
                         <div class="col-12 md:col-4">
                             <div class="ui-inputgroup">
                                 <div class="ui-inputgroup-addon">
                                     <i class="pi pi-user"></i>
                                 </div>
-                                <p:inputText placeholder="Envoyeur" id="envoyeur" value="#{transfertCompte.idEnvoyeur}" required="true" />
-                                <p:message for="envoyeur"/>
+                                <p:inputText placeholder="Nom du proprietaire" id="nom" value="#{creationCompte.nom}" required="true" />
+                                <p:message for="nom"/>
                             </div>
                         </div>
                     </div>
-                    <h5>Destinataire</h5>
+                    <h5>Solde</h5>
                     <div class="grid ui-fluid">
                         <div class="col-12 md:col-4">
                             <div class="ui-inputgroup">
                                 <div class="ui-inputgroup-addon">
                                     <i class="pi pi-user"></i>
                                 </div>
-                                <p:inputText placeholder="Destinataire" id="destinataire" value="#{transfertCompte.idDestinataire}" required="true" />
-                                <p:message for="destinataire"/>
-                            </div>
-                        </div>
-                    </div>
-                    <h5>Montant</h5>
-                    <div class="grid ui-fluid">
-                        <div class="col-12 md:col-4">
-                            <div class="ui-inputgroup">
-                                <div class="ui-inputgroup-addon">
-                                    <i class="pi pi-user"></i>
-                                </div>
-                                <p:inputNumber placeholder="Montant" minValue="1" modifyValueOnWheel="false" value="#{transfertCompte.montant}" required="true" />
+                                <p:inputNumber placeholder="Solde" minValue="0" modifyValueOnWheel="false" value="#{creationCompte.solde}" required="true" />
                             </div>
                         </div>
                     </div>
                     <br />
                     <p:commandButton 
                         id="update" 
-                        value="Effectuer le transfert" 
+                        value="Créer le compte" 
                         styleClass="ui-button-success"
                         icon="pi pi-save" 
-                        action="#{transfertCompte.effectuerTransfert()}" />
+                        action="#{creationCompte.ajouterCompte()}" />
                 </h:form>
-                <p:messages id="messages" showDetail="true" closable="true">
-                    <p:autoUpdate/>
-                </p:messages>
-                <br />
-                Test
             </ui:define>
 
         </ui:composition>
