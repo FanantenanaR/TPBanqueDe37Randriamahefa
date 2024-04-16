@@ -31,23 +31,22 @@
                         <h:outputText value="#{mouvementCompte.compte.nom}"/>
                         <h:panelGroup/>
                         Type du mouvement :
-                        <h:selectOneRadio id="typeMouvement"
-                                          value="#{mouvementCompte.typeMouvement}"
-                                          required="true"
-                                          layout="pageDirection">
-                            <f:selectItem itemValue="ajout" itemLabel="Depot"/>
-                            <f:selectItem itemValue="retrait" itemLabel="Retrait"/>
-                        </h:selectOneRadio>
+                        <p:selectOneButton value="#{mouvementCompte.typeMouvement}" required="true">
+                            <f:selectItem itemLabel="Dépot" itemValue="ajout"/>
+                            <f:selectItem itemLabel="Retrait" itemValue="retrait"/>
+                        </p:selectOneButton>
                         <h:message for="typeMouvement"/>
 
                         Montant du mouvement :
-                        <h:inputText id="montant" value="#{mouvementCompte.montant}"
+                        <p:inputNumber id="montant" value="#{mouvementCompte.montant}"
                                      required="true"
                                      validator="#{mouvementCompte.validateSolde}"/>
                         <h:message for="montant"/>
                     </h:panelGrid>
-                    <h:commandButton action="#{mouvementCompte.effectuerMouvement()}"
+                    <br/>
+                    <p:commandButton action="#{mouvementCompte.effectuerMouvement()}"
                                      value="Enregistrer le mouvement"/>
+                    <br/>
                 </h:form>   
             </ui:define>
 
