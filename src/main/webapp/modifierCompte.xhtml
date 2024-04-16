@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/template_default.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="id" value="#{modifierCompte.idCompte}"/>
+                    <f:viewAction action="#{modifierCompte.loadCompte}"/>
+                </f:metadata>
+            </ui:define>
+
+            <ui:define name="top">
+                Supprimer un compte
+            </ui:define>
+
+            <ui:define name="content">
+                <h4>Modification de #{modifierCompte.compte.nom}</h4>
+                <h:form>
+                    <h5>Nom du proprietaire</h5>
+                    <div class="grid ui-fluid">
+                        <div class="col-12 md:col-4">
+                            <div class="ui-inputgroup">
+                                <div class="ui-inputgroup-addon">
+                                    <i class="pi pi-user"></i>
+                                </div>
+                                <p:inputText placeholder="Nouveau nom du proprietaire" id="nom" value="#{modifierCompte.compte.nom}" required="true" />
+                                <p:message for="nom"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <p:commandButton 
+                        id="update" 
+                        value="Appliquer les changements" 
+                        styleClass="ui-button-success"
+                        icon="pi pi-save" 
+                        action="#{modifierCompte.appliquerChangement()}" />
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
