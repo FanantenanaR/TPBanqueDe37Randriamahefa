@@ -4,13 +4,18 @@
  */
 package mg.itu.tpbanquede37randriamahefa.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -29,6 +34,9 @@ public class CompteBancaire implements Serializable {
 
     private String nom;
     private int solde;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OperationBancaire> operations = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -55,10 +63,12 @@ public class CompteBancaire implements Serializable {
     public CompteBancaire(String nom, int solde) {
         this.nom = nom;
         this.solde = solde;
+        this.operations.add(new OperationBancaire("Création du compte", solde));
     }
 
     public void deposer(int montant) {
         solde += montant;
+        addOperation("Dépot", montant);
     }
 
     public void retirer(int montant) {
@@ -67,8 +77,17 @@ public class CompteBancaire implements Serializable {
         } else {
             solde = 0;
         }
+        addOperation("Retrait", (montant < solde ? montant : solde) * -1);
+    }
+    
+    public void addOperation(String description, int montant) {
+        this.operations.add(new OperationBancaire(description, montant));
     }
 
+    public List<OperationBancaire> getOperations() {
+        return operations;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -83,10 +102,7 @@ public class CompteBancaire implements Serializable {
             return false;
         }
         CompteBancaire other = (CompteBancaire) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
