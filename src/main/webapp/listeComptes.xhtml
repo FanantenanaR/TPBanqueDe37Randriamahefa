@@ -40,6 +40,9 @@
                                     <p:graphicImage name="images/delete.png" height="30px" />
                                 </h:link>
                             </p:column>
+                            <p:column headerText="Historique des opérations">
+                                <h:link outcome="operation?id=#{compte.id}" value="Voir"/>
+                            </p:column>
                         </p:dataTable>
                     </div>
                 </h:form>
