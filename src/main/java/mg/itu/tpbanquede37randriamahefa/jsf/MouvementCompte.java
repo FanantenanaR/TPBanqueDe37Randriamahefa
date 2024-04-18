@@ -110,11 +110,27 @@ public class MouvementCompte implements Serializable {
     }
 
     public String effectuerMouvement() {
+        boolean erreurPage = false;
+        if (typeMouvement == null) {
+            Util.messageErreur("Veuillez choisir un type de mouvement.", "");
+            erreurPage = true;
+        }
+        if (montant < 0) {
+            Util.messageErreur("Le montant saisi doit être supérieur à 0.", "");
+            erreurPage = true;
+        }
+        System.out.println("Ca passe ici *****************************");
         if (typeMouvement.equals("ajout")) {
             gestionCompte.deposer(compte, montant);
         } else {
-            gestionCompte.retirer(compte, montant);
+            if (compte.getSolde() < montant) {
+                Util.messageErreur("Le montant saisi excède la solde du compte.", "");
+                erreurPage = true;
+            } else {
+                gestionCompte.retirer(compte, montant);
+            }
         }
+        if (erreurPage) return null;
         Util.addFlashInfoMessage("Mouvement enregistré sur compte de " + compte.getNom());
         return "listeComptes?faces-redirect=true";
     }

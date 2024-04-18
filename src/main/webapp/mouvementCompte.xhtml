@@ -23,7 +23,7 @@
 
 
             <ui:define name="content">
-
+                <p:tooltip/>
                 <h1>Mouvement sur le compte numéro #{mouvementCompte.idCompte} de #{mouvementCompte.compte.nom} </h1>
                 <h:form>
                     <h:panelGrid columns="3">
@@ -31,7 +31,7 @@
                         <h:outputText value="#{mouvementCompte.compte.nom}"/>
                         <h:panelGroup/>
                         Type du mouvement :
-                        <p:selectOneButton value="#{mouvementCompte.typeMouvement}" required="true">
+                        <p:selectOneButton id="typeMouvement" value="#{mouvementCompte.typeMouvement}" required="true">
                             <f:selectItem itemLabel="Dépot" itemValue="ajout"/>
                             <f:selectItem itemLabel="Retrait" itemValue="retrait"/>
                         </p:selectOneButton>
@@ -39,15 +39,18 @@
 
                         Montant du mouvement :
                         <p:inputNumber id="montant" value="#{mouvementCompte.montant}"
-                                     required="true"
-                                     validator="#{mouvementCompte.validateSolde}"/>
+                                       required="true"
+                                       validator="#{mouvementCompte.validateSolde}"/>
                         <h:message for="montant"/>
                     </h:panelGrid>
                     <br/>
                     <p:commandButton action="#{mouvementCompte.effectuerMouvement()}"
                                      value="Enregistrer le mouvement"/>
                     <br/>
-                </h:form>   
+                </h:form> 
+                <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+                </p:messages>
             </ui:define>
 
         </ui:composition>

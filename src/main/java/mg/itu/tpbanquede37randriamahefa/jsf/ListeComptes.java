@@ -4,7 +4,6 @@
  */
 package mg.itu.tpbanquede37randriamahefa.jsf;
 
-import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Named;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;

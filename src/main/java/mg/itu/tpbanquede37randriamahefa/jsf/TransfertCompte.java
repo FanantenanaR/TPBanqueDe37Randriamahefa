@@ -61,25 +61,26 @@ public class TransfertCompte implements Serializable {
     public String effectuerTransfert() {
 
         if (idEnvoyeur == null || idEnvoyeur == 0) {
-            System.out.println("Champs non remplis");
             Util.messageErreur("Champs non remplis", "Aucun envoyeur n'a été saisi.");
             return null;
         }
         if (idDestinataire == null || idDestinataire == 0) {
-            System.out.println("Champs non remplis");
             Util.messageErreur("Champs non remplis", "Aucun destinataire n'a été saisi.");
             return null;
         }
+        
         CompteBancaire envoyeur = gestionCompte.getById(idEnvoyeur);
         if (envoyeur == null) {
-            System.out.println("Client introuvable");
             Util.messageErreur("Client introuvable", "Aucun envoyeur correspond à l'ID saisi.");
             return null;
         }
         CompteBancaire destinataire = gestionCompte.getById(idDestinataire);
         if (destinataire == null) {
-            System.out.println("Client introuvable");
             Util.messageErreur("Client introuvable", "Aucun destinataire correspond à l'ID saisi.");
+            return null;
+        }
+        if (montant > envoyeur.getSolde()) {
+            Util.messageErreur("Montant invalide", "Le montant saisi excède la solde de l'envoyeur.");
             return null;
         }
         gestionCompte.transferer(envoyeur, destinataire, montant);

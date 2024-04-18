@@ -22,11 +22,11 @@
                                 <h:link outcome="mouvementCompte?id=#{compte.id}" value="#{compte.id}"/>
                             </p:column>
 
-                            <p:column headerText="Nom">
+                            <p:column headerText="Nom" sortBy="#{compte.nom}">
                                 <h:outputText value="#{compte.nom}" />
                             </p:column>
 
-                            <p:column headerText="Solde">
+                            <p:column headerText="Solde" sortBy="#{compte.solde}">
                                 <h:outputText value="#{compte.solde}" />
                             </p:column>
                             <p:column>
