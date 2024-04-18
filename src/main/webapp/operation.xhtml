@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="jakarta.faces.html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template/template_default.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="id" value="#{historiqueOperation.idCompte}"/>
+                    <f:viewAction action="#{historiqueOperation.loadCompte}"/>
+                </f:metadata>
+            </ui:define>
+
+            <ui:define name="top">
+                Historique des opérations pour #{historiqueOperation.compte.nom}
+            </ui:define>
+
+            <ui:define name="content">
+                <p:dataTable var="operation" value="#{historiqueOperation.compte.operations}">
+                    <p:column headerText="Id" sortBy="#{operation.id}" >
+                        <h:outputText value="#{operation.id}" />
+                    </p:column>
+                    
+                    <p:column headerText="Description" >
+                        <h:outputText value="#{operation.description}" />
+                    </p:column>
+
+                    <p:column headerText="Date Opération" sortBy="#{operation.dateOperation}">
+                        <h:outputText value="#{operation.dateOperation}" />
+                    </p:column>
+                    
+                    <p:column headerText="Montant" >
+                        <h:outputText value="#{operation.montant}" />
+                    </p:column>
+                </p:dataTable>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
