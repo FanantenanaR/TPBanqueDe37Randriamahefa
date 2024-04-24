@@ -23,7 +23,8 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c")
+    @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c"),
+    @NamedQuery(name = "CompteBancaire.findAllWithJoinFetch", query = "SELECT distinct c FROM CompteBancaire c left join fetch c.operations")
 })
 public class CompteBancaire implements Serializable {
 
